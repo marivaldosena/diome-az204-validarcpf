@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "diome", "diome.csproj", "{A36A1EC7-451B-0F22-3990-72F9E14C8E19}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A36A1EC7-451B-0F22-3990-72F9E14C8E19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A36A1EC7-451B-0F22-3990-72F9E14C8E19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A36A1EC7-451B-0F22-3990-72F9E14C8E19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A36A1EC7-451B-0F22-3990-72F9E14C8E19}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DDCD0D81-5955-43A6-A0F2-4F3FF5254971}
+	EndGlobalSection
+EndGlobal
