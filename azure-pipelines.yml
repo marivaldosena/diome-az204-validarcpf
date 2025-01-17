@@ -1,0 +1,53 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.x.x' # Use the appropriate .NET version for your project
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/*Tests/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --no-build --verbosity normal'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+- task: AzureFunctionApp@1
+  inputs:
+    azureSubscription: '<Your Azure Subscription>'
+    appType: 'functionApp'
+    appName: 'validarcpf'
+    package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
