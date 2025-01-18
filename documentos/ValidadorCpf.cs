@@ -1,11 +1,10 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 
-namespace DiomeValidacoes.Documentos
+namespace diome.documentos
 {
     public class ValidadorCpf
     {
@@ -22,10 +21,10 @@ namespace DiomeValidacoes.Documentos
             _logger.LogInformation("Iniciando a validação de CPF.");
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
-            Dictionary<string?, string?> data;
+            Dictionary<string, string?>? data;
             try
             {
-                data = JsonSerializer.Deserialize<Dictionary<string?, string?>>(requestBody);
+                data = JsonSerializer.Deserialize<Dictionary<string, string?>>(requestBody);
             }
             catch (JsonException)
             {
