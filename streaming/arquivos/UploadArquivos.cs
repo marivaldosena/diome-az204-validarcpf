@@ -27,7 +27,7 @@ namespace diome.streaming.arquivos
 
                 var tipoArquivo = cabecalhoTipoArquivo.FirstOrDefault();
 
-                if (!isTipoArquivoValido(tipoArquivo))
+                if (!IsTipoArquivoValido(tipoArquivo))
                 {
                     _logger.LogInformation("Cabeçalho 'file-type' contém valor inválido.");
                     return new BadRequestObjectResult("O cabeçalho 'file-type' contém valor inválido.");
@@ -36,27 +36,28 @@ namespace diome.streaming.arquivos
                 var form = await req.ReadFormAsync();
                 var arquivo = form.Files["file"];
                 
-                if (!isArquivoValido(arquivo))
+                if (!IsArquivoValido(arquivo))
                 {
                     _logger.LogInformation("Arquivo inválido.");
                     return new BadRequestObjectResult("Arquivo inválido.");
                 } 
 
             } catch (Exception exception) {
-                _logger.LogError("Erro ao processar arquivo.", exception.Message);
+                _logger.LogError("Erro ao processar arquivo. Motivo: {}", exception.Message);
                 return new BadRequestObjectResult("Erro ao processar imagem.");
             }
 
             return new OkObjectResult("Upload concluído.");
         }
 
-        private bool isTipoArquivoValido(string? tipoArquivo) {
+        private static bool IsTipoArquivoValido(string? tipoArquivo) {
             bool isArquivoNulo = tipoArquivo == null;
-            bool isTipoValido = tipoArquivo.CompareTo("imagem") == 0 || tipoArquivo.CompareTo("video") == 0;
+            bool isTipoValido = String.Compare(tipoArquivo, "imagem", StringComparison.Ordinal) == 0 || 
+                                String.Compare(tipoArquivo, "video", StringComparison.Ordinal) == 0;
             return isTipoValido && !isArquivoNulo;
         }
 
-        private bool isArquivoValido(IFormFile? arquivo)
+        private static bool IsArquivoValido(IFormFile? arquivo)
         {
             bool isArquivoNulo = arquivo == null;
             bool isComprimentoArquivoSatisfatorio = arquivo?.Length > 0;
